@@ -156,7 +156,8 @@ export function buildBranchesFromLabels(inputs: Inputs): string[] {
 }
 
 
-export function checkPrIsMerged() {
+export function checkPrIsMerged(inputs: Inputs) {
+  const octokit = github.getOctokit(inputs.token)
   const PullRequestPayload = github.context.payload as PullRequest
   return PullRequestPayload.merged
 }

@@ -43,7 +43,8 @@ export async function run(): Promise<void> {
 
   if (inputs.checkPrIsMerged === 'true') {
     core.info('Checking PR is merged')
-    if (!checkPrIsMerged()) {
+    core.info(`${checkPrIsMerged(inputs)}`)
+    if (!checkPrIsMerged(inputs)) {
       return
     }
   }
