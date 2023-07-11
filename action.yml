@@ -1,0 +1,56 @@
+name: "Cherry Picker"
+description: "Use PR labels and other workflows to cherry pick commits into release branches"
+inputs:
+  token:
+    description: "GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)"
+    default: ${{ github.token }}
+    required: false
+  committer:
+    description: >
+      The committer name and email address in the format `Display Name <email@address.com>`.
+      Defaults to the GitHub Actions bot user.
+    default: "GitHub <noreply@github.com>"
+    required: false
+  author:
+    description: >
+      The author name and email address in the format `Display Name <email@address.com>`.
+      Defaults to the user who triggered the workflow run.
+    default: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+    required: false
+  branch:
+    description: "Name of the branch to merge the cherry pick"
+    required: true
+  labels:
+    description: "A comma or newline separated list of labels."
+    required: false
+  assignees:
+    description: "A comma or newline separated list of assignees (GitHub usernames)."
+    required: false
+  reviewers:
+    description: "A comma or newline separated list of reviewers (GitHub usernames) to request a review from."
+    required: false
+  team-reviewers:
+    description: >
+      A comma or newline separated list of GitHub teams to request a review from.
+      Note that a `repo` scoped Personal Access Token (PAT) may be required.
+    required: false
+  allowUserToSpecifyBranchViaLabel: 
+    description: >
+      Allows the user to specify which branch or branches to cherry pick to via their label
+    required: false
+  labelPatternRequirement:
+    description: >
+      If the above is true, a user can specify a label pattern to look for. Ex: "CP v" will find labels like "CP v1.0.0"
+    required: false
+  checkPrIsMerged:
+    description: >
+      If the above is true, additional check will be run to verify that pull request merged to main\master branch"
+    required: false
+
+  
+runs:
+  using: node16
+  main: dist/index.js
+branding:
+  icon: 'git-pull-request'
+  color: 'blue'
