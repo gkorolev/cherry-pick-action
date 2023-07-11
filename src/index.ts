@@ -43,8 +43,8 @@ export async function run(): Promise<void> {
 
   if (inputs.checkPrIsMerged === 'true') {
     core.info('Checking PR is merged')
-    core.info(`${checkPrIsMerged(inputs)}`)
     if (!checkPrIsMerged(inputs)) {
+      core.info(`PR is not merged, skip cherry pick`)
       return
     }
   }
@@ -55,7 +55,7 @@ export async function run(): Promise<void> {
     return
   }
 
-  core.info(`branches to cherry pick ${JSON.stringify(branchesToCherryPick)}`)
+  core.info(`Branches to cherry pick ${JSON.stringify(branchesToCherryPick)}`)
 
   const executions: ExecutionStatus[] = []
 
@@ -113,7 +113,7 @@ async function cherryPickExecution(
 
     const githubSha = process.env.GITHUB_SHA
     if (!githubSha) {
-      throw Error('no github SHA found')
+      throw Error('No github SHA found')
     }
     const prBranch = `cherry-pick-${branch}-${githubSha}`
 
