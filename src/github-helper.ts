@@ -3,6 +3,7 @@ import * as core from '@actions/core'
 import * as utils from './utils'
 import * as _ from 'lodash'
 import { PullRequest } from '@octokit/webhooks-definitions/schema'
+import { PullRequestLabeledEvent } from '@octokit/webhooks-definitions/schema'
 
 const ERROR_PR_REVIEW_FROM_AUTHOR =
   'Review cannot be requested from pull request author'
@@ -157,8 +158,8 @@ export function buildBranchesFromLabels(inputs: Inputs): string[] {
 
 
 export function checkPrIsMerged(inputs: Inputs) {
-  //const octokit = github.getOctokit(inputs.token)
-  core.info(`${github.context.eventName}`)
-  const PullRequestPayload = github.context.payload as PullRequest
-  return PullRequestPayload.merged
+  if (github.context.eventName === 'pull_request') {
+    const RequestPayload = github.context.payload as PullRequestLabeledEvent
+    RequestPayload.pull_request.merged
+  }
 }
