@@ -160,6 +160,10 @@ export function buildBranchesFromLabels(inputs: Inputs): string[] {
 export function checkPrIsMerged(inputs: Inputs) {
   if (github.context.eventName === 'pull_request') {
     const RequestPayload = github.context.payload as PullRequestLabeledEvent
-    RequestPayload.pull_request.merged
+    if (RequestPayload.pull_request.merged) {
+      return true
+    }
+    return false
   }
+  return false
 }
